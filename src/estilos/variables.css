@@ -1,0 +1,27 @@
+/* colores, tipografía y radios del Design System de Figma (03 Design System) */
+:root {
+  --fondo: #0a0a0a;
+  --panel: #141414;
+  --panel-elevado: #1f1f1f;
+  --borde: #2a2a2a;
+  --borde-fuerte: #3a3a3a;
+  --texto: #f5f5f5;
+  --texto-suave: #b8b8b8;
+  --texto-tenue: #6e6e6e;
+  --acento: #d4ff2e;
+  --acento-texto: #0a0a0a;
+  --en-vivo: #b8ff00;
+  --aviso: #ffc700;
+  --error: #ff3b2f;
+  --info: #5e35ff;
+  --agotado: #ff2e8e;
+  --ok: #b8ff00;
+  --radio-xs: 4px;
+  --radio: 8px;
+  --radio-md: 12px;
+  --radio-lg: 18px;
+  --espacio: 16px;
+  --fuente-titulo: "Big Shoulders Display", Impact, sans-serif;
+  --fuente-texto: "IBM Plex Sans", Arial, sans-serif;
+  --fuente-datos: "JetBrains Mono", monospace;
+}
