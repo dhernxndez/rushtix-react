@@ -82,3 +82,17 @@ https://www.figma.com/design/GkhkrZUbTN4slR7PCa7cpj/RushTix-%E2%80%94-Primera-En
 
 - Xiomara Molina Amaya
 - Daniel Eduardo García Hernández
+
+## Capturas
+
+Pantallas principales en los tres tamaños (móvil 375, tablet 768 y escritorio 1440 px). Están en `docs/capturas/`.
+
+| Pantalla | 375 | 768 | 1440 |
+|---|---|---|---|
+| Listado de eventos | [ver](docs/capturas/01-listado-375.png) | [ver](docs/capturas/01-listado-768.png) | [ver](docs/capturas/01-listado-1440.png) |
+| Detalle y selección de zona | [ver](docs/capturas/02-detalle-375.png) | [ver](docs/capturas/02-detalle-768.png) | [ver](docs/capturas/02-detalle-1440.png) |
+| Carrito | [ver](docs/capturas/03-carrito-375.png) | [ver](docs/capturas/03-carrito-768.png) | [ver](docs/capturas/03-carrito-1440.png) |
+
+## Arquitectura
+
+Árbol de componentes, rutas y flujo de estado: [docs/arquitectura.md](docs/arquitectura.md).
