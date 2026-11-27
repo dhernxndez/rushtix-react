@@ -18,6 +18,7 @@ import RutaProtegida from './components/RutaProtegida'
 import LayoutAdmin from './pages/admin/LayoutAdmin'
 import PaginaAdminDashboard from './pages/admin/PaginaAdminDashboard'
 import PaginaAdminEventos from './pages/admin/PaginaAdminEventos'
+import PaginaAdminInventario from './pages/admin/PaginaAdminInventario'
 import PaginaAdminFormEvento from './pages/admin/PaginaAdminFormEvento'
 import PaginaAdminUsuarios from './pages/admin/PaginaAdminUsuarios'
 import PaginaAdminReportes from './pages/admin/PaginaAdminReportes'
@@ -112,6 +113,7 @@ function App() {
             <Route index element={<PaginaAdminDashboard />} />
             <Route path="eventos" element={<PaginaAdminEventos />} />
             <Route path="eventos/nuevo" element={<PaginaAdminFormEvento />} />
+            <Route path="inventario" element={<PaginaAdminInventario />} />
             <Route path="eventos/:id" element={<PaginaAdminFormEvento />} />
             <Route path="usuarios" element={<PaginaAdminUsuarios />} />
             <Route path="reportes" element={<PaginaAdminReportes />} />
