@@ -58,6 +58,17 @@ function PaginaPago() {
     )
   }
 
+  // pone la diagonal sola: el usuario solo escribe los numeros (1230 -> 12/30)
+  function cambiarVencimiento(texto) {
+    // dejamos solo los digitos y maximo 4
+    const digitos = texto.replace(/\D/g, '').slice(0, 4)
+    if (digitos.length > 2) {
+      setVencimiento(digitos.slice(0, 2) + '/' + digitos.slice(2))
+    } else {
+      setVencimiento(digitos)
+    }
+  }
+
   async function pagar(evento) {
     evento.preventDefault()
     // evita cobrar dos veces si se pulsa dos veces seguidas
@@ -146,7 +157,7 @@ function PaginaPago() {
               id="vencimiento"
               etiqueta="Vence"
               valor={vencimiento}
-              alCambiar={setVencimiento}
+              alCambiar={cambiarVencimiento}
               error={errores.vencimiento}
               autoComplete="cc-exp"
               largoMaximo={5}
