@@ -50,6 +50,10 @@ function PaginaEventos({ alVerDetalle }) {
 
   const textoBuscado = busqueda.trim().toLowerCase()
   const eventosFiltrados = eventos.filter((evento) => {
+    // los borradores y los eventos finalizados no se muestran en el sitio
+    if (evento.estado === 'Borrador' || evento.estado === 'Finalizado') {
+      return false
+    }
     const coincideCategoria = categoria === 'Todos' || evento.categoria === categoria
     const coincideTexto =
       evento.nombre.toLowerCase().includes(textoBuscado) ||
