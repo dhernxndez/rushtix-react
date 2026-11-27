@@ -9,7 +9,8 @@ function EncabezadoSitio({ cantidadCarrito, usuario, alSalir }) {
   ]
   // si hay sesion se ven los boletos, si no se ofrece entrar
   if (usuario) {
-    enlaces.push({ ruta: '/boletos', texto: 'Mis boletos' })
+     enlaces.push({ ruta: '/perfil', texto: 'Mi perfil' })
+     enlaces.push({ ruta: '/boletos', texto: 'Mis boletos' })
   } else {
     enlaces.push({ ruta: '/login', texto: 'Ingresar' })
   }
