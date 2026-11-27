@@ -8,6 +8,7 @@ import PaginaLogin from './pages/PaginaLogin'
 import PaginaRegistro from './pages/PaginaRegistro'
 import PaginaPerfil from './pages/PaginaPerfil'
 import PaginaPago from './pages/PaginaPago'
+import PaginaResumen from './pages/PaginaResumen'
 import PaginaConfirmacion from './pages/PaginaConfirmacion'
 import PaginaBoletos from './pages/PaginaBoletos'
 import PaginaBoleto from './pages/PaginaBoleto'
@@ -67,13 +68,24 @@ function App() {
                 alCambiarCantidad={carrito.cambiarCantidad}
                 alVaciar={carrito.vaciar}
                 alSeguirComprando={() => navegar('/eventos')}
-                alContinuar={() => navegar('/pago')}
+                alContinuar={() => navegar('/resumen')}
               />
             }
           />
                   <Route path="/login" element={<PaginaLogin />} />
           <Route path="/registro" element={<PaginaRegistro />} />
           <Route path="/pago" element={<PaginaPago />} />
+          <Route
+            path="/resumen"
+            element={
+              <PaginaResumen
+                items={carrito.items}
+                alVolverAlCarrito={() => navegar('/carrito')}
+                alIrAPagar={() => navegar('/pago')}
+                alVerEventos={() => navegar('/eventos')}
+              />
+            }
+          />
           <Route path="/perfil" element={<PaginaPerfil />} />
           <Route path="/confirmacion/:ordenId" element={<PaginaConfirmacion />} />
           <Route path="/boletos" element={<PaginaBoletos />} />

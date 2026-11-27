@@ -189,7 +189,7 @@ function PaginaPago() {
           <Boton tamano="l" completo={true} deshabilitado={enviando} alHacerClic={pagar}>
             {enviando ? 'Procesando pago...' : 'Pagar ' + formatearPrecio(totales.total)}
           </Boton>
-          <Boton variante="texto" completo={true} deshabilitado={enviando} alHacerClic={() => navegar('/carrito')}>
+          <Boton variante="texto" completo={true} deshabilitado={enviando} alHacerClic={() => navegar('/resumen')}>
             Volver al resumen
           </Boton>
         </ResumenCompra>
