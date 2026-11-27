@@ -1,0 +1,57 @@
+/* panel de administracion (A1, A2, A2b, A2c del Figma) */
+.admin { display: grid; grid-template-columns: 1fr; gap: 24px; padding-top: 24px; }
+.admin-lateral { background-color: var(--panel); border: 1px solid var(--borde); border-radius: var(--radio-md); padding: 16px; }
+.admin-lateral ul { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.admin-enlace { display: block; padding: 12px 14px; border-radius: var(--radio); color: var(--texto-suave); font-weight: 600; text-decoration: none; }
+.admin-enlace:hover { color: var(--texto); background-color: var(--panel-elevado); }
+.admin-enlace.active { background-color: var(--info); color: #ffffff; }
+.admin-contenido { min-width: 0; }
+
+.admin-indicadores { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 24px 0; }
+.admin-indicador { display: flex; flex-direction: column; gap: 8px; padding: 20px; background-color: var(--panel); border: 1px solid var(--borde); border-radius: var(--radio-md); }
+.admin-indicador strong { font-family: var(--fuente-titulo); font-weight: 900; font-size: 48px; line-height: 48px; }
+
+.admin-acciones { display: flex; flex-wrap: wrap; gap: 12px; margin: 16px 0 24px; }
+.admin-subtitulo { font-size: 28px; line-height: 30px; font-weight: 800; margin-bottom: 16px; }
+.admin-buscador { max-width: 400px; margin-bottom: 24px; }
+
+.admin-tabla-marco { overflow-x: auto; border: 1px solid var(--borde); border-radius: var(--radio-md); }
+.admin-tabla { width: 100%; min-width: 560px; border-collapse: collapse; }
+.admin-tabla th { text-align: left; padding: 12px 16px; background-color: var(--panel-elevado); color: var(--texto-suave); font-size: 12px; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; }
+.admin-tabla td { padding: 14px 16px; border-top: 1px solid var(--borde); color: var(--texto-suave); }
+.admin-tabla tbody tr { background-color: var(--panel); }
+.admin-tabla tbody tr:hover { background-color: var(--panel-elevado); cursor: pointer; }
+.admin-fila-elegida, .admin-tabla tbody tr.admin-fila-elegida:hover { background-color: #1d1640; outline: 2px solid var(--info); outline-offset: -2px; }
+.admin-celda-nombre { color: var(--texto) !important; font-weight: 600; }
+.admin-celda-dato { font-family: var(--fuente-datos); font-size: 13px; }
+.admin-elegir { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.admin-elegir input { accent-color: var(--info); width: 16px; height: 16px; }
+
+.estado-etiqueta { display: inline-block; padding: 3px 8px; border-radius: var(--radio-xs); font-family: var(--fuente-titulo); font-weight: 800; font-size: 13px; line-height: 16px; text-transform: uppercase; }
+.estado-publicado { background-color: var(--info); color: #ffffff; }
+.estado-ultimas { background-color: var(--aviso); color: var(--acento-texto); }
+.estado-agotado { background-color: var(--agotado); color: #ffffff; }
+.estado-borrador { background-color: var(--panel-elevado); color: var(--texto-suave); }
+.estado-finalizado { border: 1px solid var(--borde-fuerte); color: var(--texto-suave); }
+
+.boton-eliminar { background-color: var(--error); color: var(--acento-texto); border-color: var(--error); }
+
+.admin-formulario { max-width: 720px; }
+.campo select { height: 48px; padding: 0 12px; background-color: var(--panel-elevado); color: var(--texto); border: 1px solid var(--borde-fuerte); border-radius: var(--radio); font-size: 15px; font-family: inherit; }
+.campo select:focus-visible { outline: none; border: 2px solid var(--acento); }
+.campo-con-error select { border: 2px solid var(--error); }
+.campo input[type="datetime-local"] { color-scheme: dark; }
+
+.dialogo-fondo { position: fixed; inset: 0; z-index: 50; display: flex; align-items: center; justify-content: center; padding: 16px; background-color: rgba(0, 0, 0, 0.7); }
+.dialogo { width: 100%; max-width: 480px; display: flex; flex-direction: column; gap: 16px; padding: 32px; background-color: var(--panel-elevado); border: 1px solid var(--borde-fuerte); border-radius: var(--radio-lg); }
+.dialogo h2 { font-size: 32px; line-height: 34px; font-weight: 800; }
+.dialogo p { color: var(--texto-suave); }
+.dialogo-acciones { display: flex; justify-content: flex-end; gap: 12px; }
+
+@media (min-width: 768px) {
+  .admin-indicadores { grid-template-columns: repeat(4, 1fr); }
+}
+@media (min-width: 1024px) {
+  .admin { grid-template-columns: 240px 1fr; align-items: start; }
+  .admin-lateral ul { flex-direction: column; }
+}

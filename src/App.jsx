@@ -14,6 +14,10 @@ import PaginaBoleto from './pages/PaginaBoleto'
 import PaginaAyuda from './pages/PaginaAyuda'
 import PaginaVerificar from './pages/PaginaVerificar'
 import RutaProtegida from './components/RutaProtegida'
+import LayoutAdmin from './pages/admin/LayoutAdmin'
+import PaginaAdminDashboard from './pages/admin/PaginaAdminDashboard'
+import PaginaAdminEventos from './pages/admin/PaginaAdminEventos'
+import PaginaAdminFormEvento from './pages/admin/PaginaAdminFormEvento'
 import { useCarrito, useSesion } from './context/hooks'
 
 function App() {
@@ -81,6 +85,20 @@ function App() {
               </RutaProtegida>
             }
           />
+          {/* panel admin (A1, A2): rutas hijas dentro de LayoutAdmin, solo organizador y admin */}
+          <Route
+            path="/admin"
+            element={
+              <RutaProtegida roles={['admin', 'organizador']}>
+                <LayoutAdmin />
+              </RutaProtegida>
+            }
+          >
+            <Route index element={<PaginaAdminDashboard />} />
+            <Route path="eventos" element={<PaginaAdminEventos />} />
+            <Route path="eventos/nuevo" element={<PaginaAdminFormEvento />} />
+            <Route path="eventos/:id" element={<PaginaAdminFormEvento />} />
+          </Route>
           <Route
             path="*"
             element={
