@@ -20,6 +20,11 @@ function LayoutAdmin() {
                 Eventos
               </NavLink>
             </li>
+                        <li>
+              <NavLink to="/admin/inventario" className="admin-enlace">
+                Inventario y precios
+              </NavLink>
+            </li>
             <li>
               <NavLink to="/admin/usuarios" className="admin-enlace">
                 Usuarios
