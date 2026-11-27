@@ -5,6 +5,7 @@ import PaginaEventos from './pages/PaginaEventos'
 import PaginaDetalle from './pages/PaginaDetalle'
 import PaginaCarrito from './pages/PaginaCarrito'
 import PaginaLogin from './pages/PaginaLogin'
+import PaginaRegistro from './pages/PaginaRegistro'
 import PaginaPago from './pages/PaginaPago'
 import PaginaConfirmacion from './pages/PaginaConfirmacion'
 import PaginaBoletos from './pages/PaginaBoletos'
@@ -58,7 +59,8 @@ function App() {
               />
             }
           />
-          <Route path="/login" element={<PaginaLogin />} />
+                  <Route path="/login" element={<PaginaLogin />} />
+          <Route path="/registro" element={<PaginaRegistro />} />
           <Route path="/pago" element={<PaginaPago />} />
           <Route path="/confirmacion/:ordenId" element={<PaginaConfirmacion />} />
           <Route path="/boletos" element={<PaginaBoletos />} />
