@@ -82,6 +82,7 @@ a:focus-visible,
 .menu { display: flex; gap: 24px; }
 .menu-boton { color: var(--texto-suave); font-weight: 600; text-decoration: none; padding: 6px 0; border-bottom: 2px solid transparent; }
 .menu-boton:hover, .menu-boton.active { color: var(--texto); border-bottom-color: var(--acento); }
+.menu-salir { background: none; border-top: 0; border-left: 0; border-right: 0; font-family: inherit; font-size: inherit; cursor: pointer; }
 
 /* Contenido */
 .contenido { max-width: 1376px; margin: 0 auto; padding: 0 32px 64px; min-height: 70vh; }

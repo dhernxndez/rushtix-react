@@ -1,11 +1,18 @@
 import { Link, NavLink } from 'react-router-dom'
 import Logo from './Logo'
 
-function EncabezadoSitio({ cantidadCarrito }) {
+// usuario es null si no hay sesion; alSalir cierra la sesion
+function EncabezadoSitio({ cantidadCarrito, usuario, alSalir }) {
   const enlaces = [
     { ruta: '/eventos', texto: 'Eventos' },
     { ruta: '/carrito', texto: 'Carrito (' + cantidadCarrito + ')' },
   ]
+  // si hay sesion se ven los boletos, si no se ofrece entrar
+  if (usuario) {
+    enlaces.push({ ruta: '/boletos', texto: 'Mis boletos' })
+  } else {
+    enlaces.push({ ruta: '/login', texto: 'Ingresar' })
+  }
 
   return (
     <header className="encabezado">
@@ -21,6 +28,13 @@ function EncabezadoSitio({ cantidadCarrito }) {
               </NavLink>
             </li>
           ))}
+          {usuario && (
+            <li>
+              <button type="button" className="menu-boton menu-salir" onClick={alSalir}>
+                Salir ({usuario.nombre})
+              </button>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

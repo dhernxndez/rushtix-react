@@ -3,7 +3,7 @@ import Pasos from '../components/Pasos'
 import ResumenCarrito from '../components/ResumenCarrito'
 import ResumenCompra from '../components/ResumenCompra'
 
-function PaginaCarrito({ items, alQuitar, alCambiarCantidad, alVaciar, alSeguirComprando }) {
+function PaginaCarrito({ items, alQuitar, alCambiarCantidad, alVaciar, alSeguirComprando, alContinuar }) {
   return (
     <section>
       <Pasos actual={2} />
@@ -23,10 +23,9 @@ function PaginaCarrito({ items, alQuitar, alCambiarCantidad, alVaciar, alSeguirC
 
         {items.length > 0 && (
           <ResumenCompra titulo="Resumen de compra" items={items}>
-            <Boton completo={true} deshabilitado={true}>
-              Continuar
+            <Boton completo={true} alHacerClic={alContinuar}>
+              Continuar al pago
             </Boton>
-            <p className="texto-suave">El pago simulado y el boleto con QR se agregan en el siguiente avance.</p>
             <Boton variante="borde" completo={true} alHacerClic={alSeguirComprando}>
               Seguir comprando
             </Boton>

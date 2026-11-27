@@ -4,21 +4,33 @@ import PiePagina from './components/PiePagina'
 import PaginaEventos from './pages/PaginaEventos'
 import PaginaDetalle from './pages/PaginaDetalle'
 import PaginaCarrito from './pages/PaginaCarrito'
-import { useCarrito } from './context/hooks'
+import PaginaLogin from './pages/PaginaLogin'
+import PaginaPago from './pages/PaginaPago'
+import PaginaConfirmacion from './pages/PaginaConfirmacion'
+import PaginaBoletos from './pages/PaginaBoletos'
+import { useCarrito, useSesion } from './context/hooks'
 
 function App() {
   // para cambiar de ruta
   const navegar = useNavigate()
   // el carrito vive en el contexto, aqui solo lo usamos
   const carrito = useCarrito()
+  // la sesion tambien vive en el contexto
+  const sesion = useSesion()
 
   function verDetalle(id) {
     navegar('/eventos/' + id)
   }
 
+  // al salir se vuelve a la lista de eventos
+  function cerrarSesion() {
+    sesion.salir()
+    navegar('/eventos')
+  }
+
   return (
     <>
-      <EncabezadoSitio cantidadCarrito={carrito.cantidadTotal} />
+      <EncabezadoSitio cantidadCarrito={carrito.cantidadTotal} usuario={sesion.usuario} alSalir={cerrarSesion} />
       <main className="contenido">
         <Routes>
           <Route path="/" element={<PaginaEventos alVerDetalle={verDetalle} />} />
@@ -42,9 +54,14 @@ function App() {
                 alCambiarCantidad={carrito.cambiarCantidad}
                 alVaciar={carrito.vaciar}
                 alSeguirComprando={() => navegar('/eventos')}
+                alContinuar={() => navegar('/pago')}
               />
             }
           />
+          <Route path="/login" element={<PaginaLogin />} />
+          <Route path="/pago" element={<PaginaPago />} />
+          <Route path="/confirmacion/:ordenId" element={<PaginaConfirmacion />} />
+          <Route path="/boletos" element={<PaginaBoletos />} />
           <Route
             path="*"
             element={

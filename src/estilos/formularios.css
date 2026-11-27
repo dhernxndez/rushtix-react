@@ -1,0 +1,14 @@
+/* campos y formularios (login y pago) */
+.formulario { display: flex; flex-direction: column; gap: 20px; padding: 24px; background-color: var(--panel); border: 1px solid var(--borde); border-radius: var(--radio-md); }
+.formulario h2 { font-size: 28px; line-height: 30px; font-weight: 800; }
+.formulario-fila { display: grid; grid-template-columns: 1fr; gap: 20px; }
+.campo { display: flex; flex-direction: column; gap: 8px; }
+.campo input { height: 48px; padding: 0 16px; background-color: var(--panel-elevado); color: var(--texto); border: 1px solid var(--borde-fuerte); border-radius: var(--radio); font-size: 15px; }
+.campo input::placeholder { color: var(--texto-tenue); }
+.campo input:focus-visible { outline: none; border: 2px solid var(--acento); padding: 0 15px; }
+.campo-con-error input { border: 2px solid var(--error); padding: 0 15px; }
+.campo-error { font-size: 13px; line-height: 18px; font-weight: 600; }
+.pagina-estrecha { max-width: 560px; }
+@media (min-width: 768px) {
+  .formulario-fila { grid-template-columns: 1fr 1fr; }
+}
