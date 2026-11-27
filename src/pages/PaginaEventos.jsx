@@ -5,7 +5,7 @@ import ListaEventos from '../components/ListaEventos'
 import EstadoCarga from '../components/EstadoCarga'
 import MensajeError from '../components/MensajeError'
 import { categorias } from '../data/eventos'
-import { pedirEventos } from '../utils/api-simulada'
+import { listarEventos } from '../api/eventos'
 
 function PaginaEventos({ alVerDetalle }) {
   const [eventos, setEventos] = useState([])
@@ -15,24 +15,25 @@ function PaginaEventos({ alVerDetalle }) {
   const [categoria, setCategoria] = useState('Todos')
   const [intento, setIntento] = useState(0)
 
-  // pide los eventos; si se pulsa Reintentar, intento cambia y se vuelve a pedir
+   // pide los eventos a la API; si se pulsa Reintentar, intento cambia y se vuelve a pedir
   useEffect(() => {
-    let activo = true
-    pedirEventos()
+    // el AbortController cancela la peticion si el usuario sale de la pantalla
+    const control = new AbortController()
+    listarEventos(control.signal)
       .then((datos) => {
-        if (activo) {
-          setEventos(datos)
-          setCargando(false)
-        }
+        setEventos(datos)
+        setCargando(false)
       })
       .catch((e) => {
-        if (activo) {
-          setError(e.message)
-          setCargando(false)
+        // si se cancelo a proposito, no es un error que haya que mostrar
+        if (e.name === 'AbortError') {
+          return
         }
+        setError(e.message)
+        setCargando(false)
       })
     return () => {
-      activo = false
+      control.abort()
     }
   }, [intento])
 
