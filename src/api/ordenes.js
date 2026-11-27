@@ -13,6 +13,7 @@ export function crearOrden(usuarioId, items, metodoPago) {
       throw new Error('Debes iniciar sesion para comprar.')
     }
 
+    // OJO: primero se revisa todo y despues se cambia, asi nunca queda una compra a medias
     // primero se revisa que alcance para todo
     for (let i = 0; i < items.length; i++) {
       const evento = base.eventos.find((e) => e.id === items[i].eventoId)
@@ -26,13 +27,16 @@ export function crearOrden(usuarioId, items, metodoPago) {
     }
 
     const totales = calcularTotales(items)
+    // el id de la orden sale de cuantas ordenes hay (O0001, O0002...)
     const ordenId = 'O' + String(base.ordenes.length + 1).padStart(4, '0')
     const boletos = []
 
     for (let i = 0; i < items.length; i++) {
       const evento = base.eventos.find((e) => e.id === items[i].eventoId)
       const zona = evento.zonas.find((z) => z.id === items[i].zonaId)
+      // se descuentan los boletos disponibles de la zona
       zona.disponibles = zona.disponibles - items[i].cantidad
+      // un boleto por cada unidad comprada
       for (let n = 0; n < items[i].cantidad; n++) {
         const boletoId = 'T' + String(base.boletos.length + boletos.length + 1).padStart(4, '0')
         boletos.push({
@@ -43,6 +47,7 @@ export function crearOrden(usuarioId, items, metodoPago) {
           nombreZona: zona.nombre,
           titular: usuario.nombre,
           codigo: 'RT-' + ordenId + '-' + boletoId,
+          // el QR solo lleva ids, nunca datos personales
           qr: 'RUSHTIX|ORDEN:' + ordenId + '|BOLETO:' + boletoId + '|EVENTO:' + evento.id,
           estado: 'valido',
         })
@@ -100,6 +105,7 @@ export function listarBoletosDeUsuario(usuarioId, signal) {
   }, signal)
 }
 
+// busca una orden por su id
 export function obtenerOrden(ordenId, signal) {
   return leer((base) => {
     const orden = base.ordenes.find((o) => o.id === ordenId)

@@ -1,4 +1,6 @@
 // leer y guardar en localStorage
+// localStorage solo guarda texto, por eso se usa JSON.parse al leer y JSON.stringify al guardar
+// el try/catch evita que la app se caiga si el navegador bloquea el almacenamiento
 export function leerGuardado(clave, valorPorDefecto) {
   try {
     const texto = localStorage.getItem(clave)

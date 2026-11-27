@@ -8,6 +8,7 @@ const CLAVE_BASE = 'rushtix-base'
 const ESPERA_LECTURA = 500
 const ESPERA_ESCRITURA = 700
 
+// copia un objeto para no modificar el original por error
 function copiar(valor) {
   return JSON.parse(JSON.stringify(valor))
 }
@@ -23,8 +24,10 @@ function esperar(ms, signal) {
       rechazar(errorCancelado())
       return
     }
+    // el setTimeout simula que el servidor tarda en responder
     const temporizador = setTimeout(resolver, ms)
     if (signal) {
+      // si se cancela (por ejemplo al salir de la pagina) se limpia el temporizador y se rechaza
       signal.addEventListener('abort', () => {
         clearTimeout(temporizador)
         rechazar(errorCancelado())
@@ -55,6 +58,7 @@ function revisarErrorSimulado() {
 export async function leer(lector, signal) {
   await esperar(ESPERA_LECTURA, signal)
   revisarErrorSimulado()
+  // lector es una funcion que dice que parte de la base se quiere
   const base = obtenerBase()
   return copiar(lector(base))
 }
@@ -65,6 +69,7 @@ export async function mutar(mutador) {
   await esperar(ESPERA_ESCRITURA)
   revisarErrorSimulado()
   const base = obtenerBase()
+  // si aqui adentro hay un throw, la linea de guardar no se ejecuta
   const resultado = mutador(base)
   guardar(CLAVE_BASE, base)
   return copiar(resultado)

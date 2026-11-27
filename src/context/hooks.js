@@ -1,6 +1,7 @@
 import { useContext } from 'react'
 import { AppContext } from './contexto'
 
+// hook interno: lee el contexto y avisa si se usa fuera del provider
 function useApp() {
   const valor = useContext(AppContext)
   if (valor === null) {
@@ -13,11 +14,13 @@ function useApp() {
 export function useCarrito() {
   const { estado, dispatch } = useApp()
 
+  // total de boletos, es el numero que sale en el header
   let cantidadTotal = 0
   for (let i = 0; i < estado.carrito.length; i++) {
     cantidadTotal = cantidadTotal + estado.carrito[i].cantidad
   }
 
+  // cada funcion solo manda una accion al reductor con dispatch
   function agregar(item) {
     dispatch({ tipo: 'carrito/agregar', item: item })
   }

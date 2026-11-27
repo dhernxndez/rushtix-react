@@ -3,6 +3,7 @@ import Pasos from '../components/Pasos'
 import ResumenCarrito from '../components/ResumenCarrito'
 import ResumenCompra from '../components/ResumenCompra'
 
+// paso 2: el carrito no guarda nada, recibe los items y las funciones desde App.jsx por props
 function PaginaCarrito({ items, alQuitar, alCambiarCantidad, alVaciar, alSeguirComprando, alContinuar }) {
   return (
     <section>
@@ -21,6 +22,7 @@ function PaginaCarrito({ items, alQuitar, alCambiarCantidad, alVaciar, alSeguirC
           />
         </div>
 
+        {/* el resumen solo se muestra si hay items */}
         {items.length > 0 && (
           <ResumenCompra titulo="Resumen de compra" items={items}>
             <Boton completo={true} alHacerClic={alContinuar}>

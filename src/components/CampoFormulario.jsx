@@ -24,6 +24,7 @@ function CampoFormulario({ id, etiqueta, valor, alCambiar, error = '', tipo = 't
         name={id}
         type={tipo}
         value={valor}
+        // formulario controlado: el valor viene del estado del padre y cada tecla lo actualiza
         onChange={(e) => alCambiar(e.target.value)}
         autoComplete={autoComplete}
         placeholder={placeholder}

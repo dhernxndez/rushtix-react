@@ -5,6 +5,7 @@ export function validarCorreo(correo) {
   if (texto === '') {
     return 'Escribe tu correo.'
   }
+  // algo antes de la @, algo despues y un punto con mas texto
   const formato = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!formato.test(texto)) {
     return 'Escribe un correo válido, por ejemplo nombre@correo.com.'
@@ -42,6 +43,8 @@ export function validarVencimiento(texto) {
     return 'Escribe el vencimiento como MM/AA, por ejemplo 08/29.'
   }
   const mes = Number(partes[1])
+  // el año viene con dos digitos (29), se le suma 2000
+  // OJO: getMonth() empieza en 0, por eso abajo se le suma 1
   const anio = 2000 + Number(partes[2])
   const hoy = new Date()
   if (anio < hoy.getFullYear() || (anio === hoy.getFullYear() && mes < hoy.getMonth() + 1)) {
