@@ -1,98 +1,33 @@
-# RushTix (React)
+# Proyecto_GestionBoletos
 
-Plataforma de venta de boletos para eventos de último minuto. Proyecto de Programación Orientada al Usuario (POU), UCA. Esta es la implementación en React del diseño que hicimos en Figma en la primera entrega.
+## Segundo entregable
+**Codificación del flujograma implementando estructuras de control de flujo: condicionales.**
 
-Estado: en progreso. Los datos son simulados, no hay backend ni pagos reales.
+## Descripción
+Este proyecto implementa en C++ el flujograma de gestión de boletos para eventos. El programa permite seleccionar un evento, ingresar datos del comprador, validar el inventario disponible, calcular el total a pagar, aplicar descuentos y procesar el pago.
 
-## Cómo correrlo
+## Archivos
+- `main.cc` — Código fuente del programa en C++
+- `README.md` — Descripción del proyecto
 
+## Estructura del programa
+- **Entrada:** selección de evento, nombre del comprador, cantidad de boletos
+- **Proceso:** validación de cantidad, verificación de inventario, cálculo de pago, aplicación de descuento
+- **Salida:** total a pagar, confirmación de compra, inventario actualizado, estado de la transacción
+
+## Estructuras de decisión implementadas
+- Decisión simple: validar que la cantidad de boletos sea mayor a 0
+- Decisión compuesta: verificar si el inventario es suficiente
+- Decisión compuesta: determinar si aplica descuento
+- Decisión compuesta: verificar si el pago fue exitoso
+
+## Cómo compilar y ejecutar
 ```
-npm install
-npm run dev
-```
-
-Se abre en http://localhost:5173
-
-## Qué ya funciona
-
-- Rutas con React Router: `/` y `/eventos` (listado), `/eventos/:id` (detalle), `/carrito`, y una pantalla para rutas que no existen.
-- Listado de eventos con búsqueda y filtro por categoría.
-- Estados de carga, error (con botón de reintentar) y vacío.
-- Detalle del evento: elegir zona y cantidad, con validación y resumen de la selección.
-- Carrito con cantidades editables, subtotal, cargos de servicio (5 %), quitar y vaciar. Se guarda en `localStorage`.
-
-## Qué falta
-
-- Login, registro y perfil con sesión simulada.
-- Pago simulado, confirmación y boleto con código QR.
-- Panel de administración, inventario y reportes.
-- Capturas en 375, 768 y 1440 px y documento de arquitectura.
-
-## Estructura
-
-```
-src/
-  components/   componentes reutilizables
-  pages/        vistas (eventos, detalle, carrito)
-  data/         datos simulados
-  utils/        funciones de apoyo (formato, carrito, localStorage, API simulada)
-  estilos/      variables y estilos globales
+g++ main.cc -o gestion_boletos
+./gestion_boletos
 ```
 
-## Inventario de componentes
-
-| Componente | Para qué sirve |
-|---|---|
-| Logo | Marca RushTix |
-| Boton | Botón con variantes (principal, borde, peligro, agotado, texto) y tamaños |
-| EncabezadoSitio | Barra superior y menú con enlaces |
-| PiePagina | Pie de página |
-| Pasos | Indicador de los 4 pasos de compra |
-| BuscadorEventos | Campo de búsqueda |
-| FiltroCategorias | Chips de categoría |
-| TarjetaEvento | Resumen de un evento con sticker de estado |
-| ListaEventos | Lista de tarjetas, o estado vacío |
-| EstadoCarga | Tarjetas esqueleto mientras se cargan datos |
-| EstadoVacio | Mensaje cuando no hay resultados |
-| MensajeError | Error con opción de reintentar |
-| SelectorZona | Elegir zona del evento |
-| SelectorCantidad | Elegir cuántos boletos |
-| ResumenCarrito | Lista de boletos del carrito con cantidad editable |
-| ResumenCompra | Subtotal, cargos de servicio y total |
-
-## Estado y persistencia
-
-- `App` guarda el carrito y define las rutas. El evento elegido sale de la ruta (`useParams`).
-- El carrito se guarda en `localStorage` (clave `rushtix-carrito`) con `useEffect`.
-- `PaginaEventos` pide los eventos a una API simulada con `useEffect` y maneja carga y error.
-- Los formularios usan estado controlado.
-
-## Datos simulados
-
-`src/data/eventos.js` tiene 8 eventos en 4 categorías, con 3 zonas cada uno (precio y disponibilidad). Un evento está agotado.
-
-## Diseño
-
-Colores, tipografías (Big Shoulders Display, IBM Plex Sans y JetBrains Mono), radios y componentes salen del Design System de Figma. Una decisión propia: los textos pequeños usan el gris `#b8b8b8` y no `#6e6e6e` para tener mejor contraste.
-
-
-https://www.figma.com/design/GkhkrZUbTN4slR7PCa7cpj/RushTix-%E2%80%94-Primera-Entrega-POU
-
-## Integrantes
-
-- Xiomara Molina Amaya
-- Daniel Eduardo García Hernández
-
-## Capturas
-
-Pantallas principales en los tres tamaños (móvil 375, tablet 768 y escritorio 1440 px). Están en `docs/capturas/`.
-
-| Pantalla | 375 | 768 | 1440 |
-|---|---|---|---|
-| Listado de eventos | [ver](docs/capturas/01-listado-375.png) | [ver](docs/capturas/01-listado-768.png) | [ver](docs/capturas/01-listado-1440.png) |
-| Detalle y selección de zona | [ver](docs/capturas/02-detalle-375.png) | [ver](docs/capturas/02-detalle-768.png) | [ver](docs/capturas/02-detalle-1440.png) |
-| Carrito | [ver](docs/capturas/03-carrito-375.png) | [ver](docs/capturas/03-carrito-768.png) | [ver](docs/capturas/03-carrito-1440.png) |
-
-## Arquitectura
-
-Árbol de componentes, rutas y flujo de estado: [docs/arquitectura.md](docs/arquitectura.md).
+## Autor
+Xiomara Molina Amaya — 00220826  
+Universidad Centroamericana José Simeón Cañas  
+Administración de Sistemas Operativos
