@@ -1,26 +1,61 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Boton from '../components/Boton'
 import Pasos from '../components/Pasos'
 import SelectorZona from '../components/SelectorZona'
 import SelectorCantidad from '../components/SelectorCantidad'
-import { eventos } from '../data/eventos'
+import EstadoCarga from '../components/EstadoCarga'
+import MensajeError from '../components/MensajeError'
+import { obtenerEvento } from '../api/eventos'
 import { formatearFechaCorta, formatearPrecio } from '../utils/formato'
 import { calcularTotales } from '../utils/carrito'
 
 function PaginaDetalle({ alVolver, alAgregar, alIrAlCarrito }) {
   // el id viene de la ruta /eventos/:id
   const { id } = useParams()
-  const evento = eventos.find((e) => e.id === Number(id))
+  const [evento, setEvento] = useState(null)
+  const [cargando, setCargando] = useState(true)
+  const [errorCarga, setErrorCarga] = useState('')
+  const [intento, setIntento] = useState(0)
   const [zonaElegida, setZonaElegida] = useState('')
   const [cantidad, setCantidad] = useState(1)
   const [mensajeError, setMensajeError] = useState('')
   const [mensajeOk, setMensajeOk] = useState('')
 
-  if (!evento) {
+  // pide el evento a la API cada vez que cambia el id o se pulsa Reintentar
+  useEffect(() => {
+    // el AbortController cancela la peticion si el usuario sale de la pantalla
+    const control = new AbortController()
+    obtenerEvento(id, control.signal)
+      .then((datos) => {
+        setEvento(datos)
+        setCargando(false)
+      })
+      .catch((e) => {
+        if (e.name === 'AbortError') {
+          return
+        }
+        setErrorCarga(e.message)
+        setCargando(false)
+      })
+    return () => {
+      control.abort()
+    }
+  }, [id, intento])
+
+  function reintentar() {
+    setCargando(true)
+    setErrorCarga('')
+    setIntento(intento + 1)
+  }
+
+  if (cargando) {
+    return <EstadoCarga mensaje="Cargando el evento..." />
+  }
+  if (errorCarga) {
     return (
       <section>
-        <h1 className="titulo-hero">Evento no encontrado</h1>
+        <MensajeError mensaje={errorCarga} alReintentar={reintentar} />
         <Boton variante="borde" alHacerClic={alVolver}>
           Volver a los eventos
         </Boton>
@@ -28,7 +63,7 @@ function PaginaDetalle({ alVolver, alAgregar, alIrAlCarrito }) {
     )
   }
 
-  const zona = evento.zonas.find((z) => z.id === zonaElegida)
+    const zona = evento.zonas.find((z) => z.id === zonaElegida)
   const maximo = zona ? Math.min(zona.disponibles, 8) : 8
   const agotado = evento.estado === 'Agotado'
 
