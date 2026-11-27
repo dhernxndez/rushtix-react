@@ -12,6 +12,8 @@ import PaginaConfirmacion from './pages/PaginaConfirmacion'
 import PaginaBoletos from './pages/PaginaBoletos'
 import PaginaBoleto from './pages/PaginaBoleto'
 import PaginaAyuda from './pages/PaginaAyuda'
+import PaginaVerificar from './pages/PaginaVerificar'
+import RutaProtegida from './components/RutaProtegida'
 import { useCarrito, useSesion } from './context/hooks'
 
 function App() {
@@ -70,6 +72,15 @@ function App() {
           <Route path="/boletos" element={<PaginaBoletos />} />
           <Route path="/boletos/:boletoId" element={<PaginaBoleto />} />
           <Route path="/ayuda" element={<PaginaAyuda />} />
+          {/* solo organizador y admin */}
+          <Route
+            path="/admin/verificar"
+            element={
+              <RutaProtegida roles={['admin', 'organizador']}>
+                <PaginaVerificar />
+              </RutaProtegida>
+            }
+          />
           <Route
             path="*"
             element={

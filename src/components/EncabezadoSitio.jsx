@@ -10,6 +10,11 @@ function EncabezadoSitio({ usuario, alSalir }) {
     { ruta: '/ayuda', texto: 'Ayuda' },
   ]
 
+  // los roles admin y organizador ven ademas la pantalla de verificar boletos
+  if (usuario && (usuario.rol === 'admin' || usuario.rol === 'organizador')) {
+    enlaces.push({ ruta: '/admin/verificar', texto: 'Verificar' })
+  }
+
   return (
     <header className="encabezado">
       <Link to="/" className="encabezado-logo" aria-label="RushTix, ir al inicio">
