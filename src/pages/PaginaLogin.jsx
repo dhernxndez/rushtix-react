@@ -96,7 +96,10 @@ function PaginaLogin() {
           {enviando ? 'Entrando...' : 'Entrar'}
         </Boton>
         <p className="texto-suave">Cuenta de prueba: cliente@rushtix.com con la contraseña cliente123.</p>
-      </form>
+        <Boton variante="texto" alHacerClic={() => navegar('/registro')}>
+          ¿No tienes cuenta? Regístrate
+        </Boton>
+              </form>
     </section>
   )
 }
