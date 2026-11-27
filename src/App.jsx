@@ -18,6 +18,9 @@ import LayoutAdmin from './pages/admin/LayoutAdmin'
 import PaginaAdminDashboard from './pages/admin/PaginaAdminDashboard'
 import PaginaAdminEventos from './pages/admin/PaginaAdminEventos'
 import PaginaAdminFormEvento from './pages/admin/PaginaAdminFormEvento'
+import PaginaAdminUsuarios from './pages/admin/PaginaAdminUsuarios'
+import PaginaAdminReportes from './pages/admin/PaginaAdminReportes'
+import PaginaAdminTendencias from './pages/admin/PaginaAdminTendencias'
 import { useCarrito, useSesion } from './context/hooks'
 
 function App() {
@@ -98,6 +101,9 @@ function App() {
             <Route path="eventos" element={<PaginaAdminEventos />} />
             <Route path="eventos/nuevo" element={<PaginaAdminFormEvento />} />
             <Route path="eventos/:id" element={<PaginaAdminFormEvento />} />
+            <Route path="usuarios" element={<PaginaAdminUsuarios />} />
+            <Route path="reportes" element={<PaginaAdminReportes />} />
+            <Route path="reportes/tendencias" element={<PaginaAdminTendencias />} />
           </Route>
           <Route
             path="*"

@@ -20,6 +20,16 @@ function LayoutAdmin() {
                 Eventos
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/admin/usuarios" className="admin-enlace">
+                Usuarios
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/admin/reportes" className="admin-enlace">
+                Reportes
+              </NavLink>
+            </li>
           </ul>
         </nav>
       </aside>

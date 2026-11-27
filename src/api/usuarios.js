@@ -13,6 +13,10 @@ export function iniciarSesion(correo, clave) {
     if (!usuario || usuario.clave !== clave) {
       throw new Error('Correo o contrasena incorrectos.')
     }
+    // una cuenta desactivada desde el panel admin no puede entrar
+    if (usuario.activo === false) {
+      throw new Error('Esta cuenta esta desactivada.')
+    }
     return sinClave(usuario)
   })
 }
