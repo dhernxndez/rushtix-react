@@ -1,5 +1,6 @@
 import Logo from './Logo'
 
+// pie de pagina, es el mismo en todas las pantallas
 function PiePagina() {
   return (
     <footer className="pie">

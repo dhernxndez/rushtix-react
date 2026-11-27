@@ -1,3 +1,4 @@
+// caja de busqueda controlada: el texto vive en la pagina, aqui solo se muestra y se avisa cuando cambia
 function BuscadorEventos({ texto, alCambiar }) {
   return (
     <div className="buscador">
@@ -9,6 +10,7 @@ function BuscadorEventos({ texto, alCambiar }) {
           <circle cx="8" cy="8" r="6" stroke="currentColor" strokeWidth="2" />
           <line x1="12.5" y1="12.5" x2="16" y2="16" stroke="currentColor" strokeWidth="2" />
         </svg>
+        {/* controlado: value viene por props y onChange le avisa a la pagina */}
         <input
           id="buscador"
           type="search"

@@ -1,3 +1,4 @@
+// logo de texto: RUSH normal y TIX. resaltado
 function Logo() {
   return (
     <span className="logo">

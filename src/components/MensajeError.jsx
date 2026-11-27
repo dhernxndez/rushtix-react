@@ -1,5 +1,6 @@
 import Boton from './Boton'
 
+// aviso de error con boton opcional para reintentar; role=alert hace que el lector de pantalla lo anuncie
 function MensajeError({ mensaje, alReintentar }) {
   return (
     <div className="aviso-error" role="alert">
