@@ -1,19 +1,14 @@
 import { Link, NavLink } from 'react-router-dom'
 import Logo from './Logo'
 
+// encabezado como en el figma: enlaces a la izquierda y acciones de cuenta a la derecha
 // usuario es null si no hay sesion; alSalir cierra la sesion
-function EncabezadoSitio({ cantidadCarrito, usuario, alSalir }) {
+function EncabezadoSitio({ usuario, alSalir }) {
   const enlaces = [
     { ruta: '/eventos', texto: 'Eventos' },
-    { ruta: '/carrito', texto: 'Carrito (' + cantidadCarrito + ')' },
+    { ruta: '/boletos', texto: 'Mis boletos' },
+    { ruta: '/ayuda', texto: 'Ayuda' },
   ]
-  // si hay sesion se ven los boletos, si no se ofrece entrar
-  if (usuario) {
-     enlaces.push({ ruta: '/perfil', texto: 'Mi perfil' })
-     enlaces.push({ ruta: '/boletos', texto: 'Mis boletos' })
-  } else {
-    enlaces.push({ ruta: '/login', texto: 'Ingresar' })
-  }
 
   return (
     <header className="encabezado">
@@ -29,15 +24,30 @@ function EncabezadoSitio({ cantidadCarrito, usuario, alSalir }) {
               </NavLink>
             </li>
           ))}
-          {usuario && (
-            <li>
-              <button type="button" className="menu-boton menu-salir" onClick={alSalir}>
-                Salir ({usuario.nombre})
-              </button>
-            </li>
-          )}
         </ul>
       </nav>
+      {/* sin sesion: iniciar sesion y registrarme; con sesion: perfil y salir */}
+      <div className="encabezado-acciones">
+        {usuario ? (
+          <>
+            <Link to="/perfil" className="boton boton-borde boton-s">
+              Mi perfil
+            </Link>
+            <button type="button" className="boton boton-principal boton-s" onClick={alSalir}>
+              Salir ({usuario.nombre})
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="boton boton-borde boton-s">
+              Iniciar sesión
+            </Link>
+            <Link to="/registro" className="boton boton-principal boton-s">
+              Registrarme
+            </Link>
+          </>
+        )}
+      </div>
     </header>
   )
 }

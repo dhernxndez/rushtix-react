@@ -1,17 +1,21 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
+import Boton from '../components/Boton'
 import EstadoCarga from '../components/EstadoCarga'
 import EstadoVacio from '../components/EstadoVacio'
 import MensajeError from '../components/MensajeError'
-import TarjetaBoleto from '../components/TarjetaBoleto'
 import { listarBoletosDeUsuario } from '../api/ordenes'
 import { useSesion } from '../context/hooks'
+import { formatearFechaCorta } from '../utils/formato'
+import '../estilos/formularios.css'
+import '../estilos/boletos.css'
 
 // lista de todos los boletos del usuario con sesion iniciada
 function PaginaBoletos() {
   const navegar = useNavigate()
   const sesion = useSesion()
   const [boletos, setBoletos] = useState([])
+  const [busqueda, setBusqueda] = useState('')
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
   const [intento, setIntento] = useState(0)
@@ -53,10 +57,28 @@ function PaginaBoletos() {
     return <Navigate to="/login" state={{ desde: '/boletos' }} replace />
   }
 
+  // el buscador filtra por nombre del evento o por la fecha
+  const texto = busqueda.trim().toLowerCase()
+  const visibles = boletos.filter((b) => {
+    const dato = (b.nombreEvento + ' ' + formatearFechaCorta(b.fecha)).toLowerCase()
+    return dato.includes(texto)
+  })
+
   return (
     <section>
-      <p className="kicker">Tu cuenta</p>
+      <p className="kicker">Mi cuenta</p>
       <h1 className="titulo-hero">Mis boletos</h1>
+      <p className="subtitulo">Los que tenés para próximos eventos y los que ya usaste.</p>
+
+      <div className="campo buscador-boletos">
+        <input
+          type="search"
+          value={busqueda}
+          onChange={(e) => setBusqueda(e.target.value)}
+          placeholder="Buscar por evento o fecha..."
+          aria-label="Buscar por evento o fecha"
+        />
+      </div>
 
       {cargando && <EstadoCarga mensaje="Cargando tus boletos..." />}
       {error && <MensajeError mensaje={error} alReintentar={reintentar} />}
@@ -71,10 +93,25 @@ function PaginaBoletos() {
       )}
 
       <div className="lista-boletos">
-        {boletos.map((boleto) => (
-          <TarjetaBoleto key={boleto.id} boleto={boleto} />
+        {visibles.map((boleto) => (
+          <div className="fila-boleto" key={boleto.id}>
+            <div>
+              <h3>{boleto.nombreEvento}</h3>
+              <p>
+                {boleto.nombreZona} × 1 · {formatearFechaCorta(boleto.fecha)}
+                {boleto.estado !== 'valido' && ' · Usado'}
+              </p>
+            </div>
+            <Boton variante="borde" tamano="s" alHacerClic={() => navegar('/boletos/' + boleto.id)}>
+              Ver QR
+            </Boton>
+          </div>
         ))}
       </div>
+
+      <Boton variante="texto" alHacerClic={() => navegar('/perfil')}>
+        Ver mi perfil
+      </Boton>
     </section>
   )
 }

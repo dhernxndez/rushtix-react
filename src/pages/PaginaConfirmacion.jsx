@@ -4,18 +4,17 @@ import Pasos from '../components/Pasos'
 import Boton from '../components/Boton'
 import EstadoCarga from '../components/EstadoCarga'
 import MensajeError from '../components/MensajeError'
-import TarjetaBoleto from '../components/TarjetaBoleto'
-import { obtenerOrden, listarBoletosDeUsuario } from '../api/ordenes'
+import ResumenCompra from '../components/ResumenCompra'
+import { obtenerOrden } from '../api/ordenes'
 import { useSesion } from '../context/hooks'
-import { formatearPrecio } from '../utils/formato'
+import { formatearFechaCorta } from '../utils/formato'
 
-// paso 4: confirmacion de la compra y boletos con su QR
+// paso 4: confirmacion de la compra con el resumen de lo que se pago
 function PaginaConfirmacion() {
   const { ordenId } = useParams()
   const navegar = useNavigate()
   const sesion = useSesion()
   const [orden, setOrden] = useState(null)
-  const [boletos, setBoletos] = useState([])
   const [cargando, setCargando] = useState(true)
   const [error, setError] = useState('')
   const [intento, setIntento] = useState(0)
@@ -25,22 +24,19 @@ function PaginaConfirmacion() {
     usuarioId = sesion.usuario.id
   }
 
-  // pide la orden y sus boletos; el AbortController cancela si se sale de la pagina
+  // pide la orden; el AbortController cancela si se sale de la pagina
   useEffect(() => {
     if (usuarioId === null) {
       return
     }
     const control = new AbortController()
-    Promise.all([obtenerOrden(ordenId, control.signal), listarBoletosDeUsuario(usuarioId, control.signal)])
-      .then((resultados) => {
-        const ordenPedida = resultados[0]
+    obtenerOrden(ordenId, control.signal)
+      .then((ordenPedida) => {
+        // una orden solo la puede ver quien la compro
         if (ordenPedida.usuarioId !== usuarioId) {
           throw new Error('No encontramos esa orden.')
         }
-        // de todos los boletos del usuario, solo los de esta orden
-        const deEstaOrden = resultados[1].filter((b) => b.ordenId === ordenId)
         setOrden(ordenPedida)
-        setBoletos(deEstaOrden)
         setCargando(false)
       })
       .catch((e) => {
@@ -69,28 +65,28 @@ function PaginaConfirmacion() {
     <section>
       <Pasos actual={4} />
       <p className="kicker">Paso 4 de 4</p>
-      <h1 className="titulo-hero">Pago confirmado</h1>
+      <h1 className="titulo-hero">Listo, tu compra está confirmada</h1>
+      <p className="subtitulo">Te mandamos el boleto con QR al correo {sesion.usuario.correo}.</p>
 
       {cargando && <EstadoCarga mensaje="Cargando tu compra..." />}
       {error && <MensajeError mensaje={error} alReintentar={reintentar} />}
 
       {orden && (
-        <>
-          <p className="subtitulo">
-            Orden {orden.id} por {formatearPrecio(orden.total)}. Aquí están tus boletos.
-          </p>
-          <div className="lista-boletos">
-            {boletos.map((boleto) => (
-              <TarjetaBoleto key={boleto.id} boleto={boleto} />
+        <div className="dos-columnas">
+          <div className="columna-principal">
+            <h2>Pedido {orden.id}</h2>
+            {orden.items.map((item) => (
+              <p className="texto-suave" key={item.eventoId + '-' + item.zonaId}>
+                {item.nombreEvento} · {item.nombreZona} × {item.cantidad} · {formatearFechaCorta(item.fecha)}
+              </p>
             ))}
           </div>
-          <div className="lista-boletos">
-            <Boton alHacerClic={() => navegar('/boletos')}>Ver todos mis boletos</Boton>
-            <Boton variante="borde" alHacerClic={() => navegar('/eventos')}>
-              Seguir comprando
+          <ResumenCompra titulo="Pagaste" items={orden.items}>
+            <Boton completo={true} alHacerClic={() => navegar('/boletos')}>
+              Ver mi boleto
             </Boton>
-          </div>
-        </>
+          </ResumenCompra>
+        </div>
       )}
     </section>
   )

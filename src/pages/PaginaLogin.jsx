@@ -66,12 +66,12 @@ function PaginaLogin() {
   }
 
   return (
-    <section className="pagina-estrecha">
-      <p className="kicker">Tu cuenta</p>
+    <section className="pagina-centrada">
+      <p className="kicker">Mi cuenta</p>
       <h1 className="titulo-hero">Iniciar sesión</h1>
-      <p className="subtitulo">Entra para pagar y ver tus boletos.</p>
+      <p className="subtitulo">Entrá con tu correo para ver tus boletos y comprar más rápido.</p>
 
-      <form className="formulario" onSubmit={enviar} noValidate>
+      <form className="formulario formulario-centrado" onSubmit={enviar} noValidate>
         {errorEnvio && <MensajeError mensaje={errorEnvio} />}
         <CampoFormulario
           id="correo"
@@ -93,13 +93,13 @@ function PaginaLogin() {
           autoComplete="current-password"
         />
         <Boton tipo="submit" completo={true} deshabilitado={enviando}>
-          {enviando ? 'Entrando...' : 'Entrar'}
+          {enviando ? 'Entrando...' : 'Ingresar'}
         </Boton>
         <p className="texto-suave">Cuenta de prueba: cliente@rushtix.com con la contraseña cliente123.</p>
-        <Boton variante="texto" alHacerClic={() => navegar('/registro')}>
-          ¿No tienes cuenta? Regístrate
+        <Boton variante="borde" completo={true} alHacerClic={() => navegar('/registro')}>
+          Crear cuenta
         </Boton>
-              </form>
+      </form>
     </section>
   )
 }

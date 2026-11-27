@@ -1,5 +1,7 @@
 /* campos y formularios (login y pago) */
 .formulario { display: flex; flex-direction: column; gap: 20px; padding: 24px; background-color: var(--panel); border: 1px solid var(--borde); border-radius: var(--radio-md); }
+/* version sin tarjeta de fondo (pago) */
+.formulario-plano { padding: 0; background: none; border: 0; }
 .formulario h2 { font-size: 28px; line-height: 30px; font-weight: 800; }
 .formulario-fila { display: grid; grid-template-columns: 1fr; gap: 20px; }
 .campo { display: flex; flex-direction: column; gap: 8px; }
@@ -9,6 +11,9 @@
 .campo-con-error input { border: 2px solid var(--error); padding: 0 15px; }
 .campo-error { font-size: 13px; line-height: 18px; font-weight: 600; }
 .pagina-estrecha { max-width: 560px; }
+/* login: titulo centrado y tarjeta centrada como en el figma */
+.pagina-centrada { text-align: center; padding-top: 32px; }
+.formulario-centrado { max-width: 520px; margin: 24px auto 0; text-align: left; }
 @media (min-width: 768px) {
   .formulario-fila { grid-template-columns: 1fr 1fr; }
 }

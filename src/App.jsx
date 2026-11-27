@@ -10,6 +10,8 @@ import PaginaPerfil from './pages/PaginaPerfil'
 import PaginaPago from './pages/PaginaPago'
 import PaginaConfirmacion from './pages/PaginaConfirmacion'
 import PaginaBoletos from './pages/PaginaBoletos'
+import PaginaBoleto from './pages/PaginaBoleto'
+import PaginaAyuda from './pages/PaginaAyuda'
 import { useCarrito, useSesion } from './context/hooks'
 
 function App() {
@@ -32,7 +34,7 @@ function App() {
 
   return (
     <>
-      <EncabezadoSitio cantidadCarrito={carrito.cantidadTotal} usuario={sesion.usuario} alSalir={cerrarSesion} />
+      <EncabezadoSitio usuario={sesion.usuario} alSalir={cerrarSesion} />
       <main className="contenido">
         <Routes>
           <Route path="/" element={<PaginaEventos alVerDetalle={verDetalle} />} />
@@ -66,6 +68,8 @@ function App() {
           <Route path="/perfil" element={<PaginaPerfil />} />
           <Route path="/confirmacion/:ordenId" element={<PaginaConfirmacion />} />
           <Route path="/boletos" element={<PaginaBoletos />} />
+          <Route path="/boletos/:boletoId" element={<PaginaBoleto />} />
+          <Route path="/ayuda" element={<PaginaAyuda />} />
           <Route
             path="*"
             element={

@@ -1,16 +1,13 @@
-/* tarjeta del boleto con su codigo QR */
-.lista-boletos { display: flex; flex-direction: column; gap: 24px; margin-top: 24px; }
-.boleto { display: grid; grid-template-columns: 1fr; gap: 24px; padding: 24px; background-color: var(--panel); border: 1px solid var(--borde); border-left: 6px solid var(--acento); border-radius: var(--radio-md); }
-.boleto-info { display: flex; flex-direction: column; gap: 8px; }
-.boleto-info h3 { font-size: 28px; line-height: 30px; font-weight: 800; }
-.boleto-datos { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 8px; }
-.boleto-datos dt { font-size: 13px; line-height: 18px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--texto-suave); }
-.boleto-datos dd { font-family: var(--fuente-datos); font-weight: 500; font-size: 13px; overflow-wrap: anywhere; }
-.boleto-qr { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+/* boleto con QR y lista de boletos */
+.boleto { display: flex; flex-direction: column; align-items: center; gap: 12px; max-width: 320px; padding: 24px; text-align: center; background-color: var(--panel); border: 1px solid var(--borde); border-radius: var(--radio-md); }
+.boleto h3 { font-size: 24px; line-height: 28px; font-weight: 800; }
+.boleto-detalle { font-family: var(--fuente-datos); font-size: 13px; color: var(--texto-suave); }
 .boleto-qr-caja { padding: 12px; background-color: #ffffff; border-radius: var(--radio); line-height: 0; }
-.boleto-qr small { color: var(--texto-suave); }
-@media (min-width: 768px) {
-  .boleto { grid-template-columns: 1fr auto; }
-  .boleto-datos { grid-template-columns: repeat(3, auto); justify-content: start; gap: 24px; }
-  .boleto-qr { align-items: center; }
-}
+.boleto-codigo { font-family: var(--fuente-datos); font-size: 13px; overflow-wrap: anywhere; }
+.boleto-aviso { font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; color: var(--texto-suave); }
+.acciones-boleto { display: flex; flex-direction: column; align-items: flex-start; gap: 16px; margin-top: 24px; }
+.lista-boletos { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; }
+.fila-boleto { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 20px 24px; background-color: var(--panel); border: 1px solid var(--borde); border-radius: var(--radio-md); }
+.fila-boleto h3 { font-size: 22px; line-height: 26px; font-weight: 800; }
+.fila-boleto p { font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--texto-suave); }
+.buscador-boletos { max-width: 420px; margin-top: 24px; }
