@@ -1,70 +1,24 @@
-import { useState, useEffect } from 'react'
 import { Routes, Route, useNavigate, Link } from 'react-router-dom'
 import EncabezadoSitio from './components/EncabezadoSitio'
 import PiePagina from './components/PiePagina'
 import PaginaEventos from './pages/PaginaEventos'
 import PaginaDetalle from './pages/PaginaDetalle'
 import PaginaCarrito from './pages/PaginaCarrito'
-import { leerGuardado, guardar } from './utils/almacenamiento'
+import { useCarrito } from './context/hooks'
 
 function App() {
   // para cambiar de ruta
   const navegar = useNavigate()
-  const [carrito, setCarrito] = useState(() => leerGuardado('rushtix-carrito', []))
-
-  // guardar el carrito cada vez que cambia
-  useEffect(() => {
-    guardar('rushtix-carrito', carrito)
-  }, [carrito])
+  // el carrito vive en el contexto, aqui solo lo usamos
+  const carrito = useCarrito()
 
   function verDetalle(id) {
     navegar('/eventos/' + id)
   }
 
-  function agregarAlCarrito(nuevo) {
-    const existe = carrito.find((i) => i.eventoId === nuevo.eventoId && i.zonaId === nuevo.zonaId)
-    if (existe) {
-      const copia = carrito.map((i) => {
-        if (i === existe) {
-          let cantidad = i.cantidad + nuevo.cantidad
-          if (cantidad > 8) {
-            cantidad = 8
-          }
-          return { eventoId: i.eventoId, zonaId: i.zonaId, nombreEvento: i.nombreEvento, nombreZona: i.nombreZona, fecha: i.fecha, precio: i.precio, cantidad: cantidad }
-        }
-        return i
-      })
-      setCarrito(copia)
-    } else {
-      setCarrito(carrito.concat([nuevo]))
-    }
-  }
-
-  function cambiarCantidad(idEvento, idZona, nueva) {
-    if (nueva < 1 || nueva > 8) {
-      return
-    }
-    const copia = carrito.map((i) => {
-      if (i.eventoId === idEvento && i.zonaId === idZona) {
-        return { eventoId: i.eventoId, zonaId: i.zonaId, nombreEvento: i.nombreEvento, nombreZona: i.nombreZona, fecha: i.fecha, precio: i.precio, cantidad: nueva }
-      }
-      return i
-    })
-    setCarrito(copia)
-  }
-
-  function quitarDelCarrito(idEvento, idZona) {
-    setCarrito(carrito.filter((i) => !(i.eventoId === idEvento && i.zonaId === idZona)))
-  }
-
-  let cantidadCarrito = 0
-  for (let i = 0; i < carrito.length; i++) {
-    cantidadCarrito = cantidadCarrito + carrito[i].cantidad
-  }
-
   return (
     <>
-      <EncabezadoSitio cantidadCarrito={cantidadCarrito} />
+      <EncabezadoSitio cantidadCarrito={carrito.cantidadTotal} />
       <main className="contenido">
         <Routes>
           <Route path="/" element={<PaginaEventos alVerDetalle={verDetalle} />} />
@@ -74,7 +28,7 @@ function App() {
             element={
               <PaginaDetalle
                 alVolver={() => navegar('/eventos')}
-                alAgregar={agregarAlCarrito}
+                alAgregar={carrito.agregar}
                 alIrAlCarrito={() => navegar('/carrito')}
               />
             }
@@ -83,10 +37,10 @@ function App() {
             path="/carrito"
             element={
               <PaginaCarrito
-                items={carrito}
-                alQuitar={quitarDelCarrito}
-                alCambiarCantidad={cambiarCantidad}
-                alVaciar={() => setCarrito([])}
+                items={carrito.items}
+                alQuitar={carrito.quitar}
+                alCambiarCantidad={carrito.cambiarCantidad}
+                alVaciar={carrito.vaciar}
                 alSeguirComprando={() => navegar('/eventos')}
               />
             }
@@ -95,7 +49,7 @@ function App() {
             path="*"
             element={
               <section>
-                <h1>Página no encontrada</h1>
+                <h1>{'P\u00e1gina no encontrada'}</h1>
                 <p>
                   La ruta que buscas no existe. <Link to="/eventos">Volver a los eventos</Link>
                 </p>
