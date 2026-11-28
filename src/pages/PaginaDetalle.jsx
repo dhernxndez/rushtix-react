@@ -10,6 +10,8 @@ import { obtenerEvento } from '../api/eventos'
 import { formatearFechaCorta, formatearPrecio } from '../utils/formato'
 import { calcularTotales } from '../utils/carrito'
 
+// paso 1 de la compra: se elige la zona y la cantidad de boletos de un evento
+// los props son funciones que vienen de App.jsx (volver, agregar al carrito, ir al carrito)
 function PaginaDetalle({ alVolver, alAgregar, alIrAlCarrito }) {
   // el id viene de la ruta /eventos/:id
   const { id } = useParams()
@@ -43,12 +45,14 @@ function PaginaDetalle({ alVolver, alAgregar, alIrAlCarrito }) {
     }
   }, [id, intento])
 
+  // vuelve a pedir el evento despues de un error
   function reintentar() {
     setCargando(true)
     setErrorCarga('')
     setIntento(intento + 1)
   }
 
+  // mientras llega la respuesta se muestra el estado de carga y si falla, el error
   if (cargando) {
     return <EstadoCarga mensaje="Cargando el evento..." />
   }
@@ -63,7 +67,9 @@ function PaginaDetalle({ alVolver, alAgregar, alIrAlCarrito }) {
     )
   }
 
-    const zona = evento.zonas.find((z) => z.id === zonaElegida)
+  // zona elegida (si todavia no se eligio, zona queda undefined)
+  const zona = evento.zonas.find((z) => z.id === zonaElegida)
+  // maximo por compra: 8 o lo que quede en la zona, lo que sea menor
   const maximo = zona ? Math.min(zona.disponibles, 8) : 8
   const agotado = evento.estado === 'Agotado'
 
@@ -74,6 +80,7 @@ function PaginaDetalle({ alVolver, alAgregar, alIrAlCarrito }) {
   }
   const totales = calcularTotales(items)
 
+  // la cantidad nunca baja de 1 ni pasa del maximo
   function cambiarCantidad(nueva) {
     if (nueva < 1) {
       setCantidad(1)
@@ -84,6 +91,7 @@ function PaginaDetalle({ alVolver, alAgregar, alIrAlCarrito }) {
     }
   }
 
+  // al cambiar de zona se reinicia la cantidad y se limpian los mensajes
   function elegirZona(idZona) {
     setZonaElegida(idZona)
     setCantidad(1)
@@ -91,7 +99,9 @@ function PaginaDetalle({ alVolver, alAgregar, alIrAlCarrito }) {
     setMensajeOk('')
   }
 
+  // validacion del formulario: sin zona o con cantidad invalida no se agrega nada
   function agregar(e) {
+    // preventDefault evita que el formulario recargue la pagina
     e.preventDefault()
     setMensajeOk('')
     if (!zona) {
